@@ -39,6 +39,48 @@ Notebook: [`churn_modelling_tensorflow.ipynb`](Day1/churn_modelling_tensorflow.i
 | Test F1 | 0.595 |
 | Test AUC | 0.856 |
 
+# ITI_ST — Deep Learning Day 2: CNNs with TensorFlow/Keras
+
+Three CNN notebooks on two image datasets (CIFAR-10 and Fashion-MNIST), covering a basic CNN, training callbacks, and `ImageDataGenerator`-based data augmentation.
+
+## Datasets
+
+### 1. CIFAR-10 — basic CNN (`0.0 cifar10_cnn.ipynb`)
+10-class color image classification (32×32×3), 50k train / 10k test.
+
+- Architecture: 2× (Conv 3×3 → MaxPool), Conv 3×3, Flatten, Dense 64, Dense 10 (logits)
+- Trained with Adam, 10 epochs, batch 128, `validation_split=0.1`
+- Fixes applied: one-hot labels via `to_categorical(train_labels.reshape(-1))` (raw labels are `(N,1)`, otherwise `to_categorical` yields a broken `(N,1,10)` shape); loss set to `CategoricalCrossentropy(from_logits=True)` (the final layer is linear — on this TF build the default `from_logits=False` computed a garbage loss and the model never learned)
+
+| Metric | Value |
+|---|---|
+| Train accuracy | 0.731 |
+| Val accuracy | 0.696 |
+| Test accuracy | 0.674 |
+| Test loss | 0.928 |
+
+### 2. CIFAR-10 — training callbacks (`0.1 CNN_callbacks_Cifar-10.ipynb`)
+Same CNN on CIFAR-10 with `EarlyStopping` + model checkpointing.
+
+- Fix applied: conditional `load_model`/`load_weights` (the saved `cnn_model.h5` / `cnn.hdf5` files don't exist in the repo, so a fresh model is trained instead of crashing)
+- EarlyStopping restored weights from the best epoch (epoch 7)
+
+| Metric | Value |
+|---|---|
+| Macro avg precision | 0.59 |
+| Macro avg recall | 0.54 |
+| Macro avg F1 | 0.53 |
+| BER | 0.464 |
+
+### 3. Fashion-MNIST — data augmentation (`1.0 CNN_DataGen_Fom_RAM_clothing-image.ipynb`)
+10-class grayscale clothing classification (28×28), 60k train / 10k test, fed from RAM via `ImageDataGenerator`.
+
+| Model | Test accuracy |
+|---|---|
+| CNN, 10 epochs (no augmentation) | 0.905 |
+| CNN, 20 epochs | 0.795 |
+| CNN, 50 epochs (augmented) | 0.787 |
+
 ## Requirements
 
 - Python 3.13
@@ -49,5 +91,5 @@ Notebook: [`churn_modelling_tensorflow.ipynb`](Day1/churn_modelling_tensorflow.i
 Run notebooks with:
 
 ```bash
-jupyter notebook Day1/
+jupyter notebook Day2/
 ```
