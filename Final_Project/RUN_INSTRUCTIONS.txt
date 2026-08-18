@@ -1,0 +1,34 @@
+HOUSE PRICE PREDICTION PROJECT - RUN INSTRUCTIONS
+==================================================
+
+TO AVOID PYTHON REPL POP-UP:
+1. Double-click "start_project.bat" in the project folder
+   OR follow the steps below:
+
+MANUAL STEP-BY-STEP:
+
+STEP 1: Start the Backend (FastAPI)
+   Open PowerShell and run:
+   cd D:\git_hub\ITI_ST\Final_Project
+   "venv\Scripts\python.exe" -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+   
+   OR run start_project.bat (double-click)
+
+STEP 2: Start the Frontend (React)
+   Open a NEW PowerShell tab
+   cd D:\git_hub\ITI_ST\Final_Project\frontend
+   npm start
+
+STEP 3: Open your browser
+   Go to: http://localhost:3000
+
+PROJECT FUNCTIONALITY:
+- Enter property location, carpet area (sqft), bathroom count, balcony count
+- Optional: furnishing status, facing direction, society name
+- Click "Predict Price" to get the predicted price in rupees
+- Model R² score: 0.8806
+
+REQUIREMENTS:
+- Backend: Python 3.11+, FastAPI, uvicorn, joblib, pandas, numpy, scikit-learn
+- Frontend: Node.js, React, react-dom, react-router-dom
+- Data: data/house_prices.csv (187,531 rows)
